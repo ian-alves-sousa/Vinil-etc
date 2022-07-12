@@ -1,0 +1,691 @@
+/* Reset */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  width: 100%;
+  height: auto;
+}
+
+/* Variáveis - Ficam dentro do código inteiro*/
+:root{
+  --header-height: 4.5rem;
+    /* colors */
+    --hue: 2;
+    /* HSL color mode */
+    --base-color: hsl(var(--hue) 100% 57%);
+    --base-color-second: hsl(var(--hue) 94% 79%);
+    --base-color-alt: hsl(var(--hue) 57% 53%);
+    --title-color: hsl(var(--hue) 55% 12%);
+    --text-color: rgb(0, 0, 0);
+    --text-color-light: hsl(0 0% 97%);
+    --body-color: hsl(0 0% 97%);
+
+    /* fonts */
+    --title-font-size: 1.875rem;
+    --subtitle-font-size:1rem;
+
+    --title-font: "Poppin", sans-serif;
+    --body-font: "DM Sans", sans-serif;
+}
+
+/* Base */
+html{ /* Faz a rolagem suave na hora do click no menu*/
+  scroll-behavior: smooth;
+}
+
+body{
+  font: 400 1rem var(--body-font);
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased; /* Deixa a cor um pouco mais leve */
+}
+
+.title{
+  font: 700 var(--title-font-size) var(--title-font);
+  color: var(--title-color);
+  -webkit-font-smoothing: auto;
+}
+
+.button{
+  background-color: var(--base-color); 
+  color: var(--text-color-light);
+  height: 3.5rem;
+  display: inline-flex; /* Fica no tamanho do conteúdo */
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: 0.25rem;
+  font: 500 1rem var(--body-font);
+}
+
+.button:hover{ /* Coloca a cor quando passa o mouse e suavisa isso */
+  background:var(--base-color-alt);
+  transition: background 0.3s;
+}
+
+.divider-1{
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1) ,
+    hsla(var(--hue), 65%, 88%, 0.34) 
+  );
+}
+
+.divider-2{
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 65%, 88%, 0.34),
+    hsla(var(--hue), 36%, 57%, 1)
+  );
+}
+
+/* Layout */
+
+#about{
+  background: white;
+}
+
+.container {
+  
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.grid{
+  display: grid; /* Habilita novas funções */
+  gap: 2rem;
+}
+
+.section{
+  padding: calc(5rem + var(--header-height)) 0; /* Primeiro referencia em cima e embaixo, depois as laterais */
+  /* Resolve o problema de não mostrar todo o espaço quando clicar em um item do menu */
+}
+
+.section .title{
+  margin-bottom: 1rem;
+}
+
+.section .subtitle{
+  font-family: var(--subtitle-font-size);
+}
+
+.section header{
+  margin-bottom: 4rem;
+}
+
+.section header strong{
+  color: var(--base-color);
+}
+
+#header{
+  border-bottom: 1px solid #E4E4E4;
+  margin-bottom: 2rem;
+  display: flex;
+  width: 100%;
+  position: fixed; /* Deixa o header fixo e posiciona ele */
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--body-color);
+}
+
+#header.scroll{ /* Define uma sombra no scroll */
+  box-shadow: 0px 0px 12px 0 rgba(0, 0, 0, 0.15);
+ 
+}
+
+
+
+/* Logo */
+
+.logo {
+  display: flex;
+  height: 4rem;
+  width: 6rem;
+}
+
+/* Navigation */
+
+nav {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+ 
+}
+
+
+
+nav ul li{
+  text-align: center;
+}
+
+nav ul li a{
+  transition: color 0.2s;
+  position: relative;
+  color: black;
+}
+
+nav ul li a:hover,
+nav ul li a.active{ /* hover é quando passa o mause em cima*/
+color: var(--base-color);
+/* Isso vai acontecer quando passar o mouse em cima e quando tiver no active*/
+}
+
+nav ul li a::after { 
+  content: "";
+  width: 0%; /* Esconde o traço*/
+  height: 2px;
+  background: var(--base-color);
+  position: absolute; /* Posição absoluta em relação ao a*/
+  left: 0;
+  bottom: -1.5rem;
+  transition: width 0.2s;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after{ /* Aplica algo depois que passa o mouse (traço embaixo)*/
+  width: 100%; /* Quando faz o hover aparece o traço*/
+  /* Faz aparecer o traço depois do active*/
+}
+nav .menu{
+  opacity: 0;
+  visibility: hidden;
+  top: -20rem;
+  transition: 0.2s;
+}
+
+nav .menu ul{ /* Faz com que o display do menu desapareça*/
+  display: none;
+}
+
+/* Mostrar menu - Grande aberto (Mobile)*/
+nav.show .menu{
+  opacity: 1;
+  visibility: visible;
+  background: var(--body-color);
+  height: 100vh; /* Define o tamanho dele conforme a tela */
+  width: 100vw;
+  position: fixed; /* Deixa fixo no topo e na esquerda */
+  top:0;
+  left: 0;
+  display: grid;
+  place-content: center;
+}
+
+nav.show .menu ul{
+  display: grid;
+}
+
+
+nav.show ul.grid{
+  gap: 4rem;
+}
+
+/* Toggle (troca do que está) menu */
+.toggle{
+  color: var(--base-color);
+  font-size: 1.5rem;
+  cursor: pointer; /* Faz mudar o cursor quando passa em cima o mouse */
+}
+
+nav .icon-close{
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  right: 1.5rem;
+  /* Transição */
+  transition: 0.2s;
+  top: -1.5rem; /* Faz com que o ícone desça ou suba */
+  
+}
+
+nav.show div.icon-close{
+  visibility: visible;
+  opacity: 1;
+  top: 1.5rem; /* Faz com que o ícone desça ou suba */
+}
+
+/* Home */
+
+#home{
+  overflow: hidden; /* Esconde o que transborda */
+}
+
+#home .conteiner{
+  margin: 0;
+}
+
+#home .image{
+  position: relative; /* Faz com que a posição da imagem fique relativa */
+}
+
+#home .image::before{  /* Cria um elemento fictício na imagem */
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -16.8%;
+  left: 16.7%;
+  z-index: 0;
+}
+
+/*Control + Shift + I Abre o dev tols*/
+
+#home .image img{ /* Vai modificar de forma mais específica a função da imagem */
+  position: relative;
+  right: 2.93rem;
+}
+
+#home .image img
+#home .image::before{
+  border-radius: 0.25rem;
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
+
+#home .text h1{
+  margin-bottom: 1rem;
+}
+
+#home .text p{
+  margin-bottom: 2rem;
+}
+
+/*About*/
+
+#about .conteiner{
+  margin: 0;
+}
+
+#about .image{
+  position: relative; /* Faz com que a posição da imagem fique relativa */
+}
+
+#about .image::before{  /* Cria um elemento fictício na imagem */
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -8.3%;
+  left: -33%;
+  z-index: 0;
+}
+
+
+#about .image img{ /* Vai modificar de forma mais específica a função da imagem */
+  position: relative;
+  
+}
+
+#about .image img
+#about .image::before{
+  border-radius: 0.25rem;
+}
+
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* Serviços */
+
+.cards.grid{ /* Define um espaço entre os cards */
+  gap: 1.5rem;
+}
+
+.card{
+  padding: 3.625rem 2rem; /* Define o tamanho (prenchimento dos cards) */
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08); /* Sombra do box */
+  border-bottom: 0.25rem solid var(--base-color); /* Definições do box */
+  border-radius: 0.25rem 0.25rem 0 0; /* Crias as bordas do box */
+  text-align: center;
+}
+
+.card i{ /* Definições dos ícones */
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  color: var(--base-color);
+}
+
+.card .title{ /* Definições dos textos */
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.card strong{
+  color: var(--base-color);
+}
+
+/* Testemunhos */
+
+#testimonials{
+  background: white;
+  overflow: hidden; /* Não deixa a caixar vazar */
+}
+
+#testimonials .container{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#testimonials header{
+  margin-bottom: 0;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+#testimonials blockquote{
+  padding: 2rem 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08); /* Sombra do box */
+  border-radius: 0.25rem;
+}
+
+
+#testimonials blockquote p{
+position: relative; /* Deixa o positio absolute só dentro do p */
+text-indent: 1.875rem; /* Espaço do novo parágrafo */
+margin-bottom: 1.5rem;
+color: var(--title-color);
+}
+
+
+#testimonials blockquote p span{
+  font: 700 2.5rem serif; /* Define a fonte dos testemunhos */
+  position: absolute;
+  top: -0.375rem;
+  left: -1.875rem;
+  color: var(--base-color);
+}
+
+#testimonials cite{
+  display: flex;
+  align-items: center;
+  font-size: normal;
+}
+
+#testimonials cite img{
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover; /* Encaixa a imagem cobrindo todo espaço que tem ali */
+  clip-path: circle(); /* Deixa a imagem em um círculo */ 
+  margin: 0.5rem;/* Empurra a imagem um pouco pro lado */
+}
+
+
+
+/* Swiper */
+
+#testimonials .swiper-slide {
+  height: auto;
+  padding: 4rem 1rem;
+ 
+}
+
+#testimonials .swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+  
+}
+
+#testimonials .swiper-pagination-bullet-active {
+  background: var(--base-color);
+}
+
+/* Contatos */
+
+#contact .grid{
+  gap: 4rem;
+}
+
+#contact .text p{ /* Espaço entre o título e o parágrafo */
+  margin-bottom: 2rem;
+}
+
+#contact .button i, /* Aplica as mesmas propriedades para os dois */
+#contact ul li i{
+font-size: 1.5rem;
+margin-right: 0.625rem; /* Cria uma margem na direita */
+}
+
+#contact ul.grid{
+  gap: 2rem;
+}
+
+#contact ul li{
+display: flex;
+align-items: center;
+}
+
+#contact ul li i{
+  color: var(--base-color);
+}
+
+/* Footer */
+
+footer{
+  background-color: white;
+}
+
+footer.section{
+  padding: 4rem 0;
+}
+
+footer .logo{
+  display: inline-block; /* Display padrão não coloca margin, por tal a mudança */
+  margin-bottom: 1.5rem;
+}
+
+footer .brand p{
+  color: var(black);
+  margin-bottom: 0.75rem;
+}
+
+footer i{
+  font-size: 1.5rem;
+  color: black;
+}
+
+footer .social{
+  grid-auto-flow: column;
+  width: fit-content;
+}
+
+footer .social a{
+  
+  transition: 0.3s; /* Sem isso ele não se mexe */
+  display: inline-block; /* Display inline não mexe, precisa da propriedade do block */
+}
+
+footer .social a:hover{ /* Passar o mouse em cima e da uma mexida */
+  transform: translateY(-8px);
+}
+
+/* back to top */
+
+.back-to-top{
+  background: var(--base-color);
+  color: var(--text-color-light);
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.5rem;
+  clip-path: circle();
+  font-size: 1.5rem;
+  line-height: 0;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+  transform: translateY(100%); /* Vai fazer o botão subir na tela */
+}
+
+.back-to-top.show{
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsivo */
+
+@media(min-width: 1200px) {
+  /* extra large devices: 1200> */
+
+  .container{
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section{
+    padding: 10rem 0;
+  }
+
+  .section header,
+  #testimonials header{
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button{
+    height: 3.125rem;
+  }
+
+  nav .menu{
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul{
+    display:flex;
+    gap: 2rem;
+  }
+
+  nav .menu ul li a.title{
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  nav .menu ul li a.title.active{
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu{
+    display: none;
+  }
+
+/* layout */
+
+  main{
+    margin-top: var(--header-height);
+  }
+
+  /* home */
+
+#home .container{
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+  #home .image{
+    order: 1; /* order funciona por estar no container grid */
+    margin-left: 2rem;
+  }
+
+  #home .text{
+    order: 0;
+    max-width: 24rem;
+    text-align: center;
+  }
+
+  /* about */
+
+  #about .container{
+    margin: 0 auto;
+    grid-auto-flow: column;
+  }
+
+  /* services */
+  .cards{
+    grid-template-columns: 1fr 1fr 1fr; /* Divide o conteúdo em colunas de mesmas frações */
+  }
+
+  .card{
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+
+  /* testimonials */
+
+  #testimonials .container{
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+  }
+
+  /* contact */
+
+  #contact .container{
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  #contact .text{
+    max-width: 25rem;
+  }
+
+  /* footer */
+
+  footer.section{
+    padding: 3.75rem 0;
+  }
+
+  footer .container{
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo{
+    height: 9rem;
+  width: 10rem;
+  }
+  
+  }
+/* large devices: 1023> */
+@media(min-width: 992px) {
+/* large devices: 992> */
+  :root {
+    --title-font-size: 2.25rem;
+    --subtitle-font-size:1.125rem;
+  }
+}
+
+/* medium devices: 767> */
